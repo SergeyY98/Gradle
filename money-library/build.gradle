@@ -1,0 +1,35 @@
+apply plugin: 'java'
+apply plugin: 'maven-publish'
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+}
+
+ publishing {
+        publications {
+            maven(MavenPublication) {
+                groupId = 'org.gradle.money'
+                artifactId = 'project1-money'
+                version = '1.0'
+
+                from components.java
+            }
+        }
+
+repositories {
+        maven {
+            url = "$buildDir/../../mvn-repo/"
+        }
+    }
+}
+
+dependencies {
+    compile group: 'com.google.guava', name: 'guava', version: '28.1-jre'
+	testCompile group: 'junit', name: 'junit', version: '4.13-beta-3'
+	testCompile group: 'pl.pragmatists', name: 'JUnitParams', version: '1.1.1'
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '1.11'
+}
